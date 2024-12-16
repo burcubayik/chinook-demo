@@ -6,15 +6,15 @@ import com.example.chinook_demo.catalog.domain.model.ArtistId;
 public class AlbumDto {
     private AlbumId albumId;
     private String title;
-    private ArtistId artistId;
+    private ArtistDto artist;
 
     public AlbumDto() {
     }
 
-    public AlbumDto(AlbumId albumId, String title, ArtistId artistId) {
+    public AlbumDto(AlbumId albumId, String title, ArtistDto artist) {
         this.albumId = albumId;
         this.title = title;
-        this.artistId = artistId;
+        this.artist = artist;
     }
 
     public AlbumId getAlbumId() {
@@ -33,11 +33,11 @@ public class AlbumDto {
         this.title = title;
     }
 
-    public ArtistId getArtistId() {
-        return artistId;
+    public ArtistDto getArtist() {
+        return artist;
     }
 
-    public void setArtistId(ArtistId artistId) {
-        this.artistId = artistId;
+    public void setArtist(ArtistDto artist) {
+        this.artist = artist;
     }
 }

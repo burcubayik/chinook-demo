@@ -23,4 +23,15 @@ public class ArtistServiceImpl implements ArtistService {
         }
         return new ArtistDto(artist.getArtistId(), artist.getName());
     }
+
+    @Override
+    public Artist findArtist(ArtistId artistId) {
+        Artist artist = this.artistRepository.find(artistId);
+        if(artist!=null){
+            return artist;
+        }
+        return null;
+    }
+
+
 }

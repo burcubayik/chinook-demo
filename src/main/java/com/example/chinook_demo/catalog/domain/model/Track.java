@@ -1,12 +1,19 @@
 package com.example.chinook_demo.catalog.domain.model;
 
 import jakarta.persistence.*;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
 @Entity
+@Table(name = "track")
+@Document(indexName = "track")
 public class Track {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(insertable=false, updatable=false)
     private Long trackId;
+    @Field(type = FieldType.Text, name = "name")
     private String name;
     @Embedded
     private AlbumId albumId;

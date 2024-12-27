@@ -1,25 +1,29 @@
 package com.example.chinook_demo.catalog.domain.model;
 
 import jakarta.persistence.*;
-import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
 
 @Entity
-@Table(name = "track")
-@Document(indexName = "track")
 public class Track {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(insertable=false, updatable=false)
+    @Column(name = "track_id")
     private Long trackId;
-    @Field(type = FieldType.Text, name = "name")
     private String name;
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "id", column = @Column(name = "album_id"))
+    })
     private AlbumId albumId;
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "id", column = @Column(name = "media_type_id"))
+    })
     private MediaTypeId mediaTypeId;
+
     @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "id", column = @Column(name = "genre_id"))
+    })
     private GenreId genreId;
     private String composer;
     private Integer milliseconds;

@@ -2,10 +2,7 @@ package com.example.chinook_demo.catalog.api.controller;
 
 import com.example.chinook_demo.catalog.application.dto.TrackDto;
 import com.example.chinook_demo.catalog.application.service.TrackService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,7 +22,7 @@ public class TrackController {
     }
 
     @GetMapping("search")
-    public List<TrackDto> searchByTitle(String title) {
+    public List<TrackDto> searchByTitle(@RequestBody String title) {
         return trackService.searchByTitle(title);
     }
 }

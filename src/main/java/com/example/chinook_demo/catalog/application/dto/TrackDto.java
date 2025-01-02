@@ -3,7 +3,7 @@ package com.example.chinook_demo.catalog.application.dto;
 import com.example.chinook_demo.catalog.domain.model.TrackId;
 
 public class TrackDto {
-    private TrackId trackId;
+    private String trackId;
     private String name;
     private String composer;
     private Integer milliseconds;
@@ -14,7 +14,7 @@ public class TrackDto {
     private GenreDto genre;
 
     public TrackDto() {}
-    public TrackDto(TrackId trackId, String name, String composer, Integer milliseconds, Integer bytes, Float unitPrice, AlbumDto album, MediaTypeDto mediaType, GenreDto genre) {
+    public TrackDto(String trackId, String name, String composer, Integer milliseconds, Integer bytes, Float unitPrice, AlbumDto album, MediaTypeDto mediaType, GenreDto genre) {
         this.trackId = trackId;
         this.name = name;
         this.composer = composer;
@@ -26,7 +26,7 @@ public class TrackDto {
         this.genre = genre;
     }
 
-    public TrackDto(TrackId trackId, String name, String composer, Integer milliseconds, Integer bytes, Float unitPrice) {
+    public TrackDto(String trackId, String name, String composer, Integer milliseconds, Integer bytes, Float unitPrice) {
         this.trackId = trackId;
         this.name = name;
         this.composer = composer;
@@ -35,11 +35,11 @@ public class TrackDto {
         this.unitPrice = unitPrice;
     }
 
-    public TrackId getTrackId() {
+    public String getTrackId() {
         return trackId;
     }
 
-    public void setTrackId(TrackId trackId) {
+    public void setTrackId(String trackId) {
         this.trackId = trackId;
     }
 

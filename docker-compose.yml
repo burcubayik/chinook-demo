@@ -1,38 +1,44 @@
 version: '2'
 services:
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.4.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.5.0
     container_name: elasticsearch
     ports:
       - "9200:9200"
     environment:
-      - ELASTIC_PASSWORD=123change...
+      - ELASTIC_PASSWORD=12345
       - discovery.type=single-node
-      - xpack.security.enabled=true
+      - xpack.security.enabled=false
       - path.data=/usr/share/elasticsearch/data
       - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - "ES_JAVA_OPTS=-Xms2g -Xmx2g"
     ulimits:
       memlock:
         soft: -1
         hard: -1
-    mem_limit: 1g
+    mem_limit: 3g
     volumes:
-      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
-      - ./elasticsearch/data:/usr/share/elasticsearch/data
+      - es_config:/usr/share/elasticsearch/config  # Konfigürasyon dizini volume olarak
+      - es_data:/usr/share/elasticsearch/data  # Veri dizini volume olarak
+
   logstash:
-    image: docker.elastic.co/logstash/logstash:6.4.0
+    image: docker.elastic.co/logstash/logstash:8.5.0
     container_name: logstash
     environment:
       - ELASTICSEARCH_USERNAME=elastic
-      - ELASTICSEARCH_PASSWORD="123change..."
+      - ELASTICSEARCH_PASSWORD="12345"
       - NODE_NAME=my-logstash
       - XPACK_MONITORING_ENABLED=true
       - PATH_CONFIG=/usr/share/logstash/my-confs
     volumes:
-      - ./logstash/conf:/usr/share/logstash/my-confs
-      - ./logstash/csv:/usr/share/logstash/csv
+      - ./logstash/conf:/usr/share/logstash/my-confs  # Logstash konfigürasyonları
+      - ./logstash/csv:/usr/share/logstash/csv  # Logstash veri dizini
+      - es_data:/usr/share/elasticsearch/data  # Elasticsearch verisini paylaşmak için
     links:
       - elasticsearch
     depends_on:
       - elasticsearch
+
+volumes:
+  es_data:  # Elasticsearch veri volume'u
+  es_config:  # Elasticsearch konfigürasyon volume'u

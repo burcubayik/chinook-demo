@@ -2,39 +2,37 @@ package com.example.chinook_demo.catalog.domain.model;
 
 import jakarta.persistence.*;
 import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
-@Entity
-@Table(name = "track")
-public class Track {
+import org.springframework.data.annotation.Id;
+
+
+@Document(indexName = "track")
+public class TrackES {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "track_id")
-    private Long trackId;
-    private String name;
-    @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name = "id", column = @Column(name = "album_id"))
-    })
-    private AlbumId albumId;
-    @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name = "id", column = @Column(name = "media_type_id"))
-    })
-    private MediaTypeId mediaTypeId;
+    private String trackId;
 
-    @Embedded
-    @AttributeOverrides({
-            @AttributeOverride(name = "id", column = @Column(name = "genre_id"))
-    })
-    private GenreId genreId;
+    private String name;
+
+    @Field(type = FieldType.Keyword)
+    private String albumId;
+
+    @Field(type = FieldType.Keyword)
+    private String mediaTypeId;
+
+    @Field(type = FieldType.Keyword)
+    private String genreId;
+
     private String composer;
     private Integer milliseconds;
     private Integer bytes;
     private Float unitPrice;
 
-    public Track() {}
+    public TrackES() {}
 
-    public Track(String name, AlbumId albumId, MediaTypeId mediaTypeId, GenreId genreId, String composer, Integer milliseconds, Integer bytes, Float unitPrice) {
+    public TrackES(String trackId, String name, String albumId, String mediaTypeId, String genreId, String composer, Integer milliseconds, Integer bytes, Float unitPrice) {
+        this.trackId = trackId;
         this.name = name;
         this.albumId = albumId;
         this.mediaTypeId = mediaTypeId;
@@ -45,8 +43,22 @@ public class Track {
         this.unitPrice = unitPrice;
     }
 
-    public TrackId getTrackId() {
-        return new TrackId(trackId);
+    public TrackES(String trackId, String name, String composer, Integer milliseconds, Integer bytes, Float unitPrice) {
+        this.trackId = trackId;
+        this.name = name;
+        this.composer = composer;
+        this.milliseconds = milliseconds;
+        this.bytes = bytes;
+        this.unitPrice = unitPrice;
+    }
+
+    // Getters and Setters
+    public String getTrackId() {
+        return trackId;
+    }
+
+    public void setTrackId(String trackId) {
+        this.trackId = trackId;
     }
 
     public String getName() {
@@ -57,32 +69,34 @@ public class Track {
         this.name = name;
     }
 
-    public AlbumId getAlbumId() {
+    public String getAlbumId() {
         return albumId;
     }
 
-    public void setAlbumId(AlbumId albumId) {
+    public void setAlbumId(String albumId) {
         this.albumId = albumId;
     }
-    public MediaTypeId getMediaTypeId() {
+
+    public String getMediaTypeId() {
         return mediaTypeId;
     }
 
-    public void setMediaTypeId(MediaTypeId mediaTypeId) {
+    public void setMediaTypeId(String mediaTypeId) {
         this.mediaTypeId = mediaTypeId;
     }
 
-    public GenreId getGenreId() {
+    public String getGenreId() {
         return genreId;
     }
 
-    public void setGenreId(GenreId genreId) {
+    public void setGenreId(String genreId) {
         this.genreId = genreId;
     }
 
     public String getComposer() {
         return composer;
     }
+
     public void setComposer(String composer) {
         this.composer = composer;
     }
@@ -90,6 +104,7 @@ public class Track {
     public Integer getMilliseconds() {
         return milliseconds;
     }
+
     public void setMilliseconds(Integer milliseconds) {
         this.milliseconds = milliseconds;
     }
@@ -97,6 +112,7 @@ public class Track {
     public Integer getBytes() {
         return bytes;
     }
+
     public void setBytes(Integer bytes) {
         this.bytes = bytes;
     }
@@ -104,6 +120,7 @@ public class Track {
     public Float getUnitPrice() {
         return unitPrice;
     }
+
     public void setUnitPrice(Float unitPrice) {
         this.unitPrice = unitPrice;
     }

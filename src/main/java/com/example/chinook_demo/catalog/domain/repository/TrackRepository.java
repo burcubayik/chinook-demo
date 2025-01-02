@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface TrackRepository {
     Track find(TrackId trackId);
-    List<Track> findAll();
+    List<Track> findAllTracks();
 }

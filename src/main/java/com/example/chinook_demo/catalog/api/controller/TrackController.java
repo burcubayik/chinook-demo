@@ -22,7 +22,7 @@ public class TrackController {
     }
 
     @GetMapping("search")
-    public List<TrackDto> searchByTitle(@RequestBody String title) {
+    public List<TrackDto> searchByTitle(@RequestParam String title) {
         return trackService.searchByTitle(title);
     }
 }
